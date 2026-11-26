@@ -9,6 +9,8 @@
 "blossom" = "樱花";
 "halloween" = "万圣节";
 "settings" = "设置";
+"language.title" = "语言";
+"language.save_failed" = "无法保存语言设置（Windows 错误 {error}）。语言未更改。";
 "behavior" = "行为";
 "display" = "显示";
 "general" = "通用";

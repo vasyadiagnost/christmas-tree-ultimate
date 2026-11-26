@@ -9,6 +9,8 @@
 "blossom" = "Цветение сакуры";
 "halloween" = "Хеллоуин";
 "settings" = "Настройки";
+"language.title" = "Язык";
+"language.save_failed" = "Не удалось сохранить язык (ошибка Windows {error}). Язык не изменён.";
 "behavior" = "Поведение";
 "display" = "Отображение";
 "general" = "Общие";

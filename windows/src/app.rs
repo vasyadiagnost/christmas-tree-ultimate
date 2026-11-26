@@ -19,7 +19,7 @@ use windows::Win32::UI::Shell::{
     Shell_NotifyIconW,
 };
 use windows::Win32::UI::WindowsAndMessaging::*;
-use windows::core::{PCWSTR, Result, w};
+use windows::core::{HSTRING, PCWSTR, Result, w};
 
 use crate::halloween;
 use crate::log;
@@ -27,6 +27,7 @@ use crate::menu::{self, Entry, Icon, Tile};
 use crate::prefs::{self, Settings};
 use crate::snow::{self, Command, Links};
 use crate::welcome::{self, Handlers};
+use christmas_tree_ultimate::language::{self, Language};
 use snowhush_core::christmas::TransportKind;
 use snowhush_core::simulation::Mode;
 use snowhush_core::text::{self, tr};
@@ -59,6 +60,8 @@ const ID_BLOSSOM: u32 = 217;
 const ID_MIXED: u32 = 219;
 const ID_GROUND: u32 = 220;
 const ID_OPACITY_FOLD: u32 = 221;
+const ID_LANGUAGE_RUSSIAN: u32 = 222;
+const ID_LANGUAGE_ENGLISH: u32 = 223;
 /// Opacity from 10% up in steps of 5%: `ID_OPACITY` + the step.
 const ID_OPACITY: u32 = 400;
 const OPACITY_STEPS: u32 = 19;
@@ -400,6 +403,7 @@ fn show_menu(window: HWND, x: i32, y: i32) {
 
 /// What the tray menu lists, with what is on or off: sliders in the drawn menu, submenus in the system's.
 fn entries(settings: &Settings, login: bool, sliders: bool) -> Vec<Entry> {
+    let language = language::current();
     let picked = settings.modes();
     let falling: Vec<Mode> = Mode::ALL.iter().copied().filter(|mode| picked.contains(mode)).collect();
     // Mixed, the kinds are checkboxes and picking one leaves the menu open for the other; alone, one of a set.
@@ -442,6 +446,13 @@ fn entries(settings: &Settings, login: bool, sliders: bool) -> Vec<Entry> {
         Entry::Separator,
         Entry::header(tr("general")),
         Entry::toggle(ID_LOGIN, tr("login"), login, true),
+        Entry::Submenu {
+            label: tr("language.title").to_string(),
+            entries: vec![
+                Entry::choice(ID_LANGUAGE_RUSSIAN, "Русский", language == Language::Russian),
+                Entry::choice(ID_LANGUAGE_ENGLISH, "English", language == Language::English),
+            ],
+        },
     ]);
     let mut entries = if sliders {
         vec![
@@ -703,6 +714,19 @@ fn choose(window: HWND, chosen: u32, login: bool) {
         ID_LOGIN => {
             let status = prefs::set_opens_at_login(!login);
             log!("open at login {}: {status:?}", !login);
+        }
+        ID_LANGUAGE_RUSSIAN | ID_LANGUAGE_ENGLISH => {
+            let selected = if chosen == ID_LANGUAGE_ENGLISH { Language::English } else { Language::Russian };
+            if let Err(error) = language::select(selected) {
+                log!("language selection failed: {error:?}");
+                let message = HSTRING::from(text::fill("language.save_failed", &[("error", &error.0.to_string())]));
+                let title = HSTRING::from(tr("app.name"));
+                unsafe {
+                    MessageBoxW(Some(window), &message, &title, MB_OK | MB_ICONERROR);
+                }
+            } else {
+                welcome::language_changed();
+            }
         }
         ID_HALLOWEEN => {
             APP.with_borrow_mut(|app| {

@@ -9,6 +9,8 @@
 "blossom" = "Kirschblüte";
 "halloween" = "Halloween";
 "settings" = "Einstellungen";
+"language.title" = "Sprache";
+"language.save_failed" = "Die Spracheinstellung konnte nicht gespeichert werden (Windows-Fehler {error}). Die Sprache wurde nicht geändert.";
 "behavior" = "Verhalten";
 "display" = "Darstellung";
 "general" = "Allgemein";

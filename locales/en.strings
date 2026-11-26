@@ -12,6 +12,8 @@
 "blossom" = "Cherry Blossom";
 "halloween" = "Halloween";
 "settings" = "Settings";
+"language.title" = "Language";
+"language.save_failed" = "Could not save the language setting (Windows error {error}). The language has not changed.";
 "behavior" = "Behavior";
 "display" = "Display";
 "general" = "General";

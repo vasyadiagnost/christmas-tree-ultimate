@@ -9,6 +9,8 @@
 "blossom" = "桜";
 "halloween" = "ハロウィン";
 "settings" = "設定";
+"language.title" = "言語";
+"language.save_failed" = "言語設定を保存できませんでした（Windows エラー {error}）。言語は変更されていません。";
 "behavior" = "動作";
 "display" = "表示";
 "general" = "一般";

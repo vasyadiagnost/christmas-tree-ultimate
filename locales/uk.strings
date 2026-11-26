@@ -9,6 +9,8 @@
 "blossom" = "Цвіт сакури";
 "halloween" = "Гелловін";
 "settings" = "Налаштування";
+"language.title" = "Мова";
+"language.save_failed" = "Не вдалося зберегти мову (помилка Windows {error}). Мову не змінено.";
 "behavior" = "Поведінка";
 "display" = "Відображення";
 "general" = "Загальні";

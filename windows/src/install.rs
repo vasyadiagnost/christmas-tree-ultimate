@@ -665,6 +665,8 @@ mod tests {
     /// Run with --test-threads=1: HKCU overrides are confined to this test process.
     #[test]
     fn sandbox_install_update_rollback_and_scoped_uninstall() {
+        use crate::language::{self, Language};
+
         let _serial = SERIAL.lock().unwrap();
         let sandbox = Sandbox::new();
         let paths = Paths::new().unwrap();
@@ -685,6 +687,11 @@ mod tests {
         assert_eq!(read_string(RUN, NAME).as_deref(), Some(format!("\"{}\"", paths.exe.display()).as_str()));
         assert_eq!(read_string(RUN, LEGACY_NAME), None);
         assert!(paths.programs.join(SHORTCUT_NAMES[0]).is_file());
+        language::select(Language::English).unwrap();
+        assert_eq!(language::current(), Language::English);
+        snowhush_core::text::choose(&["ru"]);
+        language::choose();
+        assert_eq!(language::current(), Language::English, "recover the saved locale at startup");
         write_number(SETTINGS, w!("holidayTreeX"), 889).unwrap();
         write_number(SETTINGS, w!("mode"), 2).unwrap();
         write_raw(SETTINGS, &RawValue { name: "opaque".encode_utf16().chain([0]).collect(), kind: REG_BINARY, bytes: vec![0, 255, 7] }).unwrap();
@@ -711,9 +718,12 @@ mod tests {
             assert_eq!(read_string(RUN, LEGACY_NAME).as_deref(), Some("legacy startup"));
         }
         FAIL.set(None);
-        install(b"replacement", "0.2.2").unwrap();
+        install(b"replacement", "0.2.3").unwrap();
         assert_eq!(snapshot_key(SETTINGS).unwrap(), settings);
-        assert_eq!(installed_version().as_deref(), Some("0.2.2"));
+        assert_eq!(installed_version().as_deref(), Some("0.2.3"));
+        snowhush_core::text::choose(&["ru"]);
+        language::choose();
+        assert_eq!(language::current(), Language::English, "recover the locale after an update");
         assert!(read_string(RUN, NAME).is_some());
         assert_eq!(read_string(RUN, LEGACY_NAME), None);
         assert_eq!(snapshot_key(LEGACY_UNINSTALL).unwrap(), None);

@@ -9,6 +9,8 @@
 "blossom" = "Flor de cerezo";
 "halloween" = "Halloween";
 "settings" = "Ajustes";
+"language.title" = "Idioma";
+"language.save_failed" = "No se pudo guardar el idioma (error de Windows {error}). El idioma no ha cambiado.";
 "behavior" = "Comportamiento";
 "display" = "Pantalla";
 "general" = "General";

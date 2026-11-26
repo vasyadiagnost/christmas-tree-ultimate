@@ -2,6 +2,8 @@
 
 [Русский README](README.md)
 
+Current Windows release for Intel and AMD x64: **0.2.3**.
+
 A Christmas desktop overlay for Windows, based on Snowhush 0.13.1. Animated
 lights line three edges of each screen. A hand-painted Christmas tree can be
 resized, dragged into place, or moved to another monitor. Santa's sleigh passes
@@ -14,6 +16,9 @@ behind the tree, and a snowplow clears a path through the snow as it builds up.
   rides. You can also start either ride from the tray menu.
 - Adjust Santa's bells and the plow's engine sound separately, or mute both.
   Version 0.2.2 smooths out the gap at the end of the bell loop.
+- Switch between Russian and English from **Settings → Language → Русский /
+  English** in the tray menu. The change applies immediately and is remembered
+  after restarting the app, including launch at Windows sign-in.
 
 ## Install
 
@@ -27,11 +32,16 @@ The installer adds a Start menu shortcut and enables launch at sign-in. Use
 launch the portable build directly from its extracted archive on a PC with the
 runtime installed.
 
-## Run in English
+## Language
 
-The app opens in Russian by default. If it's already running, quit it from the
-tray menu first. For the portable version, open PowerShell in the folder with
-the executable and run:
+The app starts in Russian until you choose a language. Select **Настройки →
+Язык → English** in the tray menu to switch immediately. In English the menu
+is **Settings → Language**. The choice is saved for future launches and
+autostart.
+
+For a one-time English launch, `--english` still overrides the saved language
+without changing it. Quit any running copy from the tray menu first. For the
+portable version, open PowerShell in the folder with the executable and run:
 
 ```powershell
 .\christmas-tree-ultimate.exe --english
@@ -43,8 +53,8 @@ For a standard per-user installation:
 & "$env:LOCALAPPDATA\Programs\ChristmasTreeUltimate\christmas-tree-ultimate.exe" --english
 ```
 
-The argument applies to that launch. To start in English from a shortcut every
-time, append `--english` to its Target field.
+The argument applies only to that launch. Use the language menu to save your
+preferred language.
 
 ## Build and credits
 

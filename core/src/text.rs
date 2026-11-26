@@ -3,6 +3,7 @@
 
 use std::collections::HashMap;
 use std::sync::OnceLock;
+use std::sync::atomic::{AtomicUsize, Ordering};
 
 use crate::simulation::Mode;
 
@@ -18,25 +19,30 @@ pub(crate) const LOCALES: [(&str, &str); 9] = [
     ("zh-Hans", include_str!("../../locales/zh-Hans.strings")),
 ];
 
-static ENGLISH: OnceLock<HashMap<String, String>> = OnceLock::new();
-static CHOSEN: OnceLock<(&str, HashMap<String, String>)> = OnceLock::new();
+static TABLES: [OnceLock<HashMap<String, String>>; LOCALES.len()] = [const { OnceLock::new() }; LOCALES.len()];
+static CHOSEN: AtomicUsize = AtomicUsize::new(0);
 
 /// Speaks the first of the user's languages, most preferred first as BCP 47 or POSIX tags ("pt-BR", "ru_RU.UTF-8"),
-/// that Snowhush has; called once, before anything is shown.
+/// that Snowhush has. Changing the selection affects subsequent lookups.
 pub fn choose<S: AsRef<str>>(preferred: &[S]) {
-    let Some((code, text)) = preferred.iter().find_map(|tag| language(tag.as_ref())) else { return };
-    let _ = CHOSEN.set((code, parse(text)));
+    if let Some(index) = preferred.iter().find_map(|tag| language_index(tag.as_ref())) {
+        CHOSEN.store(index, Ordering::Relaxed);
+    }
 }
 
 /// The language spoken, as its `locales/` name: "en", "pt", "zh-Hans".
 pub fn code() -> &'static str {
-    CHOSEN.get().map_or("en", |(code, _)| code)
+    LOCALES[CHOSEN.load(Ordering::Relaxed)].0
 }
 
 /// The text for `key`, falling back to English.
 pub fn tr(key: &str) -> &'static str {
-    let english = ENGLISH.get_or_init(|| parse(LOCALES[0].1));
-    CHOSEN.get().and_then(|(_, chosen)| chosen.get(key)).or_else(|| english.get(key)).map_or("", String::as_str)
+    let chosen = CHOSEN.load(Ordering::Relaxed);
+    table(chosen).get(key).or_else(|| table(0).get(key)).map_or("", String::as_str)
+}
+
+fn table(index: usize) -> &'static HashMap<String, String> {
+    TABLES[index].get_or_init(|| parse(LOCALES[index].1))
 }
 
 /// The text for `prefix` and what falls, in `Mode::ALL`'s order: "windows.snow.autumn".
@@ -65,7 +71,12 @@ fn mode_key(mode: Mode) -> &'static str {
 
 /// The language for a tag, with its table. Traditional Chinese has none of its own and falls back to English rather
 /// than to Simplified.
+#[cfg(test)]
 pub(crate) fn language(tag: &str) -> Option<(&'static str, &'static str)> {
+    language_index(tag).map(|index| LOCALES[index])
+}
+
+fn language_index(tag: &str) -> Option<usize> {
     let tag = tag.split(['.', '@']).next()?.replace('_', "-").to_ascii_lowercase();
     let mut parts = tag.split('-');
     let name = match parts.next()? {
@@ -76,7 +87,7 @@ pub(crate) fn language(tag: &str) -> Option<(&'static str, &'static str)> {
         }
         primary => primary,
     };
-    LOCALES.iter().find(|(code, _)| *code == name).copied()
+    LOCALES.iter().position(|(code, _)| *code == name)
 }
 
 /// Reads an Apple `.strings` table: `"key" = "value";` lines, with `/* */` and `//` comments.
@@ -129,4 +140,20 @@ pub(crate) fn parse(text: &str) -> HashMap<String, String> {
         }
     }
     table
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn switching_languages_preserves_previously_returned_strings() {
+        choose(&["ru"]);
+        let russian = tr("settings");
+        assert_eq!(russian, "Настройки");
+        choose(&["en"]);
+        assert_eq!(code(), "en");
+        assert_eq!(tr("settings"), "Settings");
+        assert_eq!(russian, "Настройки");
+    }
 }

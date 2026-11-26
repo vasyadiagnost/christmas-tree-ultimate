@@ -9,6 +9,8 @@
 "blossom" = "Fleurs de cerisier";
 "halloween" = "Halloween";
 "settings" = "Réglages";
+"language.title" = "Langue";
+"language.save_failed" = "Impossible d’enregistrer la langue (erreur Windows {error}). La langue n’a pas été modifiée.";
 "behavior" = "Comportement";
 "display" = "Affichage";
 "general" = "Général";

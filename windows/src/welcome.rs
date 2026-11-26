@@ -1,6 +1,6 @@
 use std::cell::RefCell;
 use std::rc::Rc;
-use std::sync::{Once, OnceLock};
+use std::sync::Once;
 use std::time::{Instant, SystemTime, UNIX_EPOCH};
 
 use windows::Win32::Foundation::{HWND, LPARAM, LRESULT, POINT, RECT, WPARAM};
@@ -94,11 +94,12 @@ fn open() -> Result<()> {
     REGISTER.call_once(|| {
         let _ = card::register(CLASS, Some(procedure));
     });
+    let button = tr("welcome.start").to_uppercase();
     let (scale, _) = card::placement(WIDTH, HEIGHT);
-    let height = Card::new(WIDTH, HEIGHT, scale)?.fitting_height(&[content(false)], HEIGHT)?;
+    let height = Card::new(WIDTH, HEIGHT, scale)?.fitting_height(&[content(false, &button)], HEIGHT)?;
     let (scale, origin) = card::placement(WIDTH, height);
     let card = Card::new(WIDTH, height, scale)?;
-    let (pixels, hits) = card.paint(&content(false))?;
+    let (pixels, hits) = card.paint(&content(false, &button))?;
     let title: Vec<u16> = tr("app.name").encode_utf16().chain([0]).collect();
     unsafe {
         let window = CreateWindowExW(
@@ -123,10 +124,32 @@ fn open() -> Result<()> {
     Ok(())
 }
 
-fn content(pressed: bool) -> Content<'static> {
-    static BUTTON: OnceLock<String> = OnceLock::new();
-    let button = BUTTON.get_or_init(|| tr("welcome.start").to_uppercase());
+fn content(pressed: bool, button: &str) -> Content<'_> {
     Content { icon: 112.0, title: tr("app.name"), title_size: 28.0, body: tr("welcome.windows"), button, pressed, closable: false }
+}
+
+/// Updates an open first-launch card when the tray menu changes the language.
+pub fn language_changed() {
+    let repaint: Result<_> = WELCOME.with_borrow_mut(|welcome| {
+        let Some(welcome) = welcome else { return Ok(None) };
+        if welcome.crumble.is_some() {
+            return Ok(None);
+        }
+        let button = tr("welcome.start").to_uppercase();
+        let height = welcome.card.fitting_height(&[content(false, &button)], HEIGHT)?;
+        let card = Card::new(WIDTH, height, welcome.card.scale)?;
+        let (pixels, hits) = card.paint(&content(false, &button))?;
+        welcome.card = card;
+        welcome.hits = hits;
+        welcome.pressed = false;
+        welcome.holding = false;
+        Ok(Some((welcome.window, welcome.card.size, pixels)))
+    });
+    match repaint {
+        Ok(Some((window, size, pixels))) => card::present(window, size, &pixels, None),
+        Ok(None) => {}
+        Err(error) => log!("welcome language update failed: {error}"),
+    }
 }
 
 unsafe extern "system" fn procedure(window: HWND, message: u32, wparam: WPARAM, lparam: LPARAM) -> LRESULT {
@@ -182,7 +205,7 @@ fn get_started() {
             return None;
         }
         welcome.pressed = false;
-        let (base, _) = welcome.card.paint(&content(false)).ok()?;
+        let (base, _) = welcome.card.paint(&content(false, &tr("welcome.start").to_uppercase())).ok()?;
         let mut rect = RECT::default();
         unsafe { GetWindowRect(welcome.window, &mut rect).ok()? };
         welcome.crumble = Some(Crumble::new(base, welcome.card.size, welcome.card.height, welcome.card.scale, POINT { x: rect.left, y: rect.top }));
@@ -262,7 +285,7 @@ impl Welcome {
             return (clicked, None);
         }
         self.pressed = pressed;
-        (clicked, self.card.paint(&content(pressed)).ok().map(|(pixels, _)| pixels))
+        (clicked, self.card.paint(&content(pressed, &tr("welcome.start").to_uppercase())).ok().map(|(pixels, _)| pixels))
     }
 }
 
