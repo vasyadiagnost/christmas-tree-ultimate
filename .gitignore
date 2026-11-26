@@ -1,0 +1,20 @@
+.build/
+build/
+dist/
+.DS_Store
+.playwright-mcp/
+windows/target/
+core/target/
+linux/target/
+linux/packaging/pkg/
+linux/packaging/src/
+linux/packaging/*.pkg.tar.zst
+linux/packaging/dist/
+linux/bench/out/
+site-engine/target/
+.tools/
+tmp/
+
+# Locally prepared audio. See RELEASING.md for the source and build step.
+/windows/assets/audio/santa-bells.wav
+/windows/assets/audio/source/

@@ -1,0 +1,141 @@
+/* Snowhush's words, one file per language. The Mac app ships each as <language>.lproj/Localizable.strings;
+   the Windows and Linux apps build them in through snowhush-core. Every file has every key of en.strings. */
+
+"intensity" = "Intensity";
+"opacity" = "Opacity";
+"off" = "Off";
+"mode" = "Mode";
+"mixed" = "Mixed";
+"snow" = "Snow";
+"autumn" = "Autumn Leaves";
+"rain" = "Rain";
+"blossom" = "Cherry Blossom";
+"halloween" = "Halloween";
+"settings" = "Settings";
+"behavior" = "Behavior";
+"display" = "Display";
+"general" = "General";
+"accumulate" = "Accumulate";
+/* What Accumulate lets snow settle on, and what it sums up as when every one is on. */
+"surface.ground" = "Ground";
+"surface.dock" = "Dock";
+"surface.widgets" = "Widgets";
+"surface.windows" = "Windows";
+"surface.panel" = "Panel";
+"all" = "All";
+"melt.snow" = "Melt Snow";
+"melt.autumn" = "Wither Leaves";
+"melt.blossom" = "Wilt Petals";
+"deep" = "Deep Interaction";
+"behind" = "Behind Windows";
+"full_screen" = "Show over Full Screen";
+"taskbar" = "Behind Taskbar";
+"screenshots" = "Show in Screenshots";
+"performance" = "Max Performance";
+"login" = "Open at Login";
+"updates" = "Check for Updates…";
+"support" = "Support Snowhush";
+"quit" = "Quit";
+
+/* Clear Snow, for what lies about: rain never does. */
+"clear.snow" = "Clear Snow";
+"clear.autumn" = "Clear Leaves";
+"clear.blossom" = "Clear Petals";
+"clear.snow.autumn" = "Clear Snow and Leaves";
+"clear.snow.blossom" = "Clear Snow and Petals";
+"clear.autumn.blossom" = "Clear Leaves and Petals";
+
+/* The welcome card; its title stays in English everywhere, and its button is shown in capitals. */
+"welcome.mac" = "Snowhush lives in the menu bar. Click the snowflake to change the snowfall, let the drift melt, or keep the snow behind your windows. Sweep it aside with your cursor.";
+"welcome.windows" = "christmas tree ultimate lives in the system tray. Its menu controls the snow, edge lights, tree and festive rides. Choose Move tree, drag the tree and press Esc when finished.";
+"welcome.start" = "Get Started";
+
+/* Windows' own update check. */
+"update.ask" = "christmas tree ultimate {version} is available. You have {current}.\n\nDownload it now?";
+"update.available" = "christmas tree ultimate {version} is available";
+"update.click" = "Click to download it.";
+"update.latest" = "You're up to date.\n\nchristmas tree ultimate {current} is the latest version.";
+"update.failed" = "Couldn't check for updates.";
+"shortcut" = "Snow on your desktop";
+
+/* Windows' installer card; its title and buttons are shown in capitals. */
+"setup.fresh" = "Version {version}. Installs just for you, without administrator rights.";
+"setup.install" = "Install";
+"setup.newer" = "Updates christmas tree ultimate {old} to {version}. Your settings stay as they are.";
+"setup.update" = "Update";
+"setup.same" = "christmas tree ultimate {old} is already here. Installing {version} again repairs it.";
+"setup.reinstall" = "Reinstall";
+"setup.installing" = "Installing…";
+"setup.settle" = "Let it settle.";
+"setup.done" = "christmas tree ultimate is installed. You'll find it in the Start menu.";
+"setup.open" = "Open christmas tree ultimate";
+"setup.failed" = "Couldn't install: {error}.";
+"setup.retry" = "Try Again";
+
+"app.name" = "christmas tree ultimate";
+"holiday.title" = "Christmas decorations";
+"holiday.garlands" = "Edge lights";
+"holiday.tree" = "Christmas tree";
+"holiday.tree.settings" = "Tree settings";
+"holiday.monitor" = "Tree display";
+"holiday.monitor.primary" = "Primary display";
+"holiday.tree.size" = "Tree height";
+"holiday.tree.x" = "Horizontal position";
+"holiday.tree.y" = "Height above the bottom";
+"holiday.tree.place" = "Move tree (Esc to finish)";
+"holiday.brightness" = "Light brightness";
+"holiday.blink" = "Light pattern";
+"holiday.blink.steady" = "Steady";
+"holiday.blink.twinkle" = "Twinkle";
+"holiday.blink.wave" = "Wave";
+"holiday.tractor" = "Snowplow";
+"holiday.tractor.settings" = "Snowplow settings";
+"holiday.tractor.threshold" = "Snow depth before clearing";
+"holiday.tractor.preview" = "Show snowplow now";
+"holiday.santa" = "Santa and reindeer";
+"holiday.santa.settings" = "Santa settings";
+"holiday.santa.interval" = "Time between sleigh rides";
+"holiday.santa.preview" = "Show Santa now";
+"holiday.seconds" = "s";
+"holiday.full_screen" = "Decorations over full screen";
+
+"holiday.sound.title" = "Sound";
+"holiday.sound.enabled" = "Enable sounds";
+"holiday.sound.santa" = "Santa's sleigh bells";
+"holiday.sound.tractor" = "Motor and snow clearing";
+"holiday.sound.santa_volume" = "Sleigh bell volume";
+"holiday.sound.tractor_volume" = "Snowplow volume";
+"startup.failed" = "Could not start christmas tree ultimate.\n\n{error}";
+"setup.autostart" = "The installed app will start automatically when you sign in to Windows. You can turn this off in its tray menu.";
+
+/* Offline Windows installer prerequisites. */
+"setup.prerequisites" = "Checks Windows components and installs Microsoft Visual C++ from this file if needed. Windows may request administrator approval. Internet is not required.";
+"setup.progress.windows" = "Checking Windows version and processor…";
+"setup.progress.system" = "Checking system components and graphics…";
+"setup.progress.runtime" = "Checking Microsoft Visual C++ x64…";
+"setup.progress.extract" = "Preparing the official Microsoft installer…";
+"setup.progress.install.runtime" = "Installing Microsoft Visual C++… Windows may request administrator approval.";
+"setup.progress.verify.runtime" = "Verifying Microsoft Visual C++ installation…";
+"setup.progress.files" = "Installing the application and enabling startup…";
+"setup.progress.wait" = "Please wait. This window remains responsive. The computer will not restart automatically.";
+"setup.restart.title" = "Restart required";
+"setup.restart.done" = "The application is installed, but Microsoft Visual C++ requires a Windows restart. Restart when convenient; the application will then start at login.";
+"setup.finish" = "Finish";
+"setup.log" = "Microsoft installer log";
+"setup.error.ui" = "The installer window could not be opened: {error}. Nothing was installed. Try restarting Windows and run this file again.";
+"setup.error.worker" = "The installation could not be started: {error}. Please try again.";
+"setup.error.windows" = "Windows 10 or Windows 11 is required.";
+"setup.error.architecture" = "64-bit Windows for Intel or AMD processors (x64) is required.";
+"setup.error.system" = "System component {component} is missing or cannot load. Install Windows updates and try again.";
+"setup.error.graphics" = "Direct3D 11 is unavailable ({code}). Update Windows and the graphics driver from its manufacturer, then try again.";
+"setup.error.payload.version" = "The bundled Microsoft installer is too old or has invalid version metadata. Obtain a fresh application installer.";
+"setup.error.payload.folder" = "A private temporary folder for the Microsoft installer could not be created.";
+"setup.error.payload.write" = "The Microsoft installer could not be prepared: {error}. Check free disk space and folder access.";
+"setup.error.payload.signature" = "The Microsoft digital signature could not be verified ({code}). Nothing was installed. Install Windows updates and obtain a fresh application installer.";
+"setup.error.cancelled" = "Installation of the required Microsoft components was cancelled. The application was not installed. Select Retry when ready.";
+"setup.error.runtime.exit" = "The official Microsoft installer returned error {code}. The application was not installed. Restart Windows and try again.";
+"setup.error.runtime.launch" = "The official Microsoft installer could not be started: {error}. The application was not installed.";
+"setup.error.runtime.process" = "The Microsoft installation result could not be confirmed. The application was not installed. Close the Microsoft installer and try again.";
+"setup.error.runtime.verify" = "The required Microsoft Visual C++ components could not be confirmed after installation. Restart Windows and run this installer again.";
+"setup.error.runtime.newer.broken" = "A newer Microsoft Visual C++ runtime is registered, but its system libraries cannot load. Repair Microsoft Visual C++ x64 in Windows Settings and try again; it will not be downgraded.";
+"setup.error.runtime.missing" = "Microsoft Visual C++ x64 version 14.51.36231 or newer is required.";

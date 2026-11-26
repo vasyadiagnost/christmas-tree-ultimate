@@ -1,0 +1,52 @@
+christmas tree ultimate -- third-party notices
+
+Snowhush
+Required Notice: Copyright 2026 Mykhailo Bezruchko (https://github.com/mbezruchko/Snowhush)
+PolyForm Noncommercial License 1.0.0: see the accompanying LICENSE.
+https://polyformproject.org/licenses/noncommercial/1.0.0/
+
+Santa sleigh bells
+User-provided recording titled "Sleigh Bells by MissyWhimsyArt| Royalty-free Music".
+Author credited by the recording: MissyWhimsyArt (Lynda Smith-McDaniel).
+The application uses a lightly trimmed/crossfaded six-second loop.
+Recording listing:
+https://audio.com/azure-reef/audio/sleigh-bells-by-missywhimsyart-royalty-free-music-151272
+Author's listing:
+https://pixabay.com/sound-effects/film-special-effects-sleigh-bells-272151/
+https://pixabay.com/service/license-summary/
+
+Microsoft Visual C++ v14 Redistributable
+Copyright (c) Microsoft Corporation. All rights reserved.
+The setup contains the original, digitally signed Microsoft installer, whose
+separate Microsoft license terms apply. Version and origin are documented at:
+https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist
+
+Rust standard library
+Copyright (c) The Rust Project Contributors.
+https://github.com/rust-lang/rust
+
+Windows Rust crates (windows, windows-core, windows-link, windows-strings,
+windows-result, windows-threading, windows-collections, windows-future,
+windows-numerics, windows-interface, windows-implement)
+Copyright (c) Microsoft Corporation.
+https://github.com/microsoft/windows-rs
+
+The Rust and Windows Rust libraries above are used under the MIT license:
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
