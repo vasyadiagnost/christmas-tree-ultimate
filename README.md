@@ -1,5 +1,7 @@
 # christmas tree ultimate
 
+[English README](README.en.md)
+
 Новогодние украшения для рабочего стола Windows на основе Snowhush 0.13.1.
 Текущая версия Windows для Intel и AMD x64 — **0.2.2**.
 
